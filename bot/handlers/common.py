@@ -63,5 +63,6 @@ async def finalize_and_save_stats(message: types.Message, state: FSMContext):
     stats_dict = {k: v for k, v in user_data.items() if k != "selected_week"}
     save_stats_to_json(stats_dict)
     await export_stats_to_sheet(stats_dict)
-    await message.answer(Lexicon.STATS_COLLECTED, reply_markup=get_main_menu_keyboard())
+    await message.edit_text(Lexicon.STATS_COLLECTED)
+    await message.answer('menu:', reply_markup=get_main_menu_keyboard())
     await state.clear()
