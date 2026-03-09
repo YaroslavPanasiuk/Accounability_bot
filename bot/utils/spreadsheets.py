@@ -1,14 +1,14 @@
 from bot.lexicon import Lexicon
 import gspread
-from bot.config import Config
+from bot.config import config
 from datetime import datetime, timedelta
 import json
 
 
 async def import_stats_from_sheet():
     try:
-        gc = gspread.service_account_from_dict(Config.GOOGLE_CREDS)
-        sh = gc.open_by_url(Config.GOOGLE_SHEET_URL)
+        gc = gspread.service_account_from_dict(config.GOOGLE_CREDS)
+        sh = gc.open_by_url(config.GOOGLE_SHEET_URL)
         worksheet = sh.worksheet(Lexicon.WORKSHEET_NAME)
         values = worksheet.get_all_values()
         headers = values[0][1:19]
@@ -38,16 +38,16 @@ def get_row_from_date(date: datetime) -> int:
         return -1
 
 
-async def export_stats_to_sheet(stats: dict, date=datetime.now() - timedelta(hours=Config.TRESHOLD_HOURS)):
+async def export_stats_to_sheet(stats: dict, date=datetime.now() - timedelta(hours=config.TRESHOLD_HOURS)):
     try:
-        gc = gspread.service_account_from_dict(Config.GOOGLE_CREDS)
-        sh = gc.open_by_url(Config.GOOGLE_SHEET_URL)
+        gc = gspread.service_account_from_dict(config.GOOGLE_CREDS)
+        sh = gc.open_by_url(config.GOOGLE_SHEET_URL)
         worksheet = sh.worksheet(Lexicon.WORKSHEET_NAME)
         headers = worksheet.row_values(1)[1:19]
-        data = worksheet.get_all_values()
         current_row = get_row_from_date(date)
         if current_row == -1:
-            range = f"B{worksheet.row_count + 1}:S{worksheet.row_count + 1}"
+            print(f"No row found for date {date.strftime('%d.%m.%Y')}")
+            return
         else:
             range = f"B{current_row}:S{current_row}"
         row_data = [stats.get(header, "") for header in headers]
