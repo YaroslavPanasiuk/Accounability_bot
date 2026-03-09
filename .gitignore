@@ -1,0 +1,4 @@
+.venv
+.env
+shell.nix
+tmp.py

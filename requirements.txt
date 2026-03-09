@@ -1,0 +1,7 @@
+aiogram
+python-dotenv
+asyncpg
+greenlet
+gspread
+apscheduler
+babel
