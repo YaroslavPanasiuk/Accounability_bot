@@ -21,7 +21,7 @@ router = Router()
 @router.message(CommandStart())
 async def cmd_start(message: types.Message):
     kb = get_main_menu_keyboard()
-    await message.answer('menu:', reply_markup=kb)
+    await message.answer(Lexicon.DEFAULT_MESSAGE, reply_markup=kb)
 
 @router.message(or_f(Command("fill_stats"),LexiconFilter("SEND_STATS_CMD")))
 async def cmd_fill_stats(message: types.Message, state: FSMContext):
@@ -64,5 +64,5 @@ async def finalize_and_save_stats(message: types.Message, state: FSMContext):
     save_stats_to_json(stats_dict)
     await export_stats_to_sheet(stats_dict)
     await message.edit_text(Lexicon.STATS_COLLECTED)
-    await message.answer('menu:', reply_markup=get_main_menu_keyboard())
+    await message.answer(Lexicon.DEFAULT_MESSAGE, reply_markup=get_main_menu_keyboard())
     await state.clear()

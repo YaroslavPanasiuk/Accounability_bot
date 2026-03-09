@@ -12,6 +12,7 @@ class Lexicon:
     DAILY_REMINDER = "Привіт! Час оцінити свій день. Натисни кнопку нижче, щоб почати."
     STATS_MAIN_QUESTION = "Оціни показник '{0}'"
     STATS_COLLECTED = "Дякую, твої дані збережено!"
+    DEFAULT_MESSAGE = "👨🏼‍❤️‍👨🏻"
 
 class LexiconFilter(Filter):
     def __init__(self, key: str):
