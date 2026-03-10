@@ -28,6 +28,7 @@ async def cmd_fill_stats(message: types.Message, state: FSMContext):
         reply_markup=get_inline_numeric_keyboard("question_1")
     )
     await state.set_state(StatisticsCollection.waiting_for_answer)
+    await state.update_data({"selected_day": now})
 
 def get_next_question_index(user_data: dict) -> int:
     answers = [k for k in user_data.keys() if k in get_column_names()]
@@ -54,8 +55,7 @@ async def ask_next_question_or_finish(message: types.Message, state: FSMContext)
         await state.set_state(StatisticsCollection.waiting_for_answer)
 
 async def finalize_and_save_stats(message: types.Message, state: FSMContext):
-    user_data = await state.get_data()
-    
+    user_data = await state.get_data()    
     stats_dict = {k: v for k, v in user_data.items() if k != "selected_week" and k != "selected_day"}
     save_stats_to_json(stats_dict)
     await export_stats_to_sheet(stats_dict, date=user_data.get("selected_day"))
