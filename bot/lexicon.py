@@ -10,7 +10,7 @@ class Lexicon:
     SEND_STATS_CMD = "Оцінити день"
     SEND_PREVIOUS_STATS_CMD = "Оцінити попередній день"
     SHOW_PREVIOUS_STATS_CMD = "Показати статистику за попередні дні"
-    START_STAT_COLLECTION = "Оцнимо {0}"
+    START_STAT_COLLECTION = "Оцінимо {0}"
     DAILY_REMINDER = "Привіт! Час оцінити свій день. Натисни кнопку нижче, щоб почати."
     STATS_MAIN_QUESTION = "Оціни показник '{0}'"
     STATS_COLLECTED = "Дякую, твої дані збережено!"
