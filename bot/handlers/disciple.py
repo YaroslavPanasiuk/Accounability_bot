@@ -19,6 +19,7 @@ class DiscipleStatisticsCollection(StatesGroup):
 
 router = Router()
 router.message.filter(IsDisciple())
+router.callback_query.filter(IsDisciple())
 
 @router.message(or_f(Command("fill_stats"),LexiconFilter("SEND_STATS_CMD")))
 async def cmd_fill_stats(message: types.Message, state: FSMContext):

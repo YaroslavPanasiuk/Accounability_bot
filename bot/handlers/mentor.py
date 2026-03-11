@@ -19,6 +19,7 @@ class MentorStatisticsCollection(StatesGroup):
 
 router = Router()
 router.message.filter(IsMentor())
+router.callback_query.filter(IsMentor())
 
 @router.message(CommandStart())
 async def cmd_start(message: types.Message):

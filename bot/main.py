@@ -18,11 +18,12 @@ async def main():
     dp = Dispatcher(storage=MemoryStorage())
     register_handlers(dp)
     scheduler = AsyncIOScheduler(timezone=config.TIMEZONE)
-    scheduler.add_job(lambda: asyncio.create_task(send_daily_reminder(bot)), 'cron', hour=config.REMINDER_HOUR)
-    scheduler.add_job(lambda: asyncio.create_task(send_stats_to_mentor(bot)), 'cron', hour=config.REMINDER_HOUR, minute=30)
+    scheduler.add_job(send_daily_reminder, 'cron', hour=config.REMINDER_HOUR, minute=0, kwargs={'bot': bot})
+    scheduler.add_job(send_stats_to_mentor, 'cron', hour=config.REMINDER_HOUR, minute=30, kwargs={'bot': bot})
     dp["scheduler"] = scheduler
     
     scheduler.start()
+    print("\n".join([f"{job.name} - {job.next_run_time.strftime("%Y-%m-%d %H:%M:%S")}" if job.next_run_time else "Paused" for job in scheduler.get_jobs()]))
 
     print('bot started')
     await dp.start_polling(bot)
