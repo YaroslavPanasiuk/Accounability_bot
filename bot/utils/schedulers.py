@@ -9,7 +9,7 @@ from bot.utils.handle_json import get_stats_from_json, stats_exist_for_date
 from bot.utils.formatters import format_daily_stats
 
 async def send_daily_reminder(bot: Bot):
-    import_stats_from_sheet()
+    await import_stats_from_sheet()
     if stats_exist_for_date(datetime.now()):
         return
     try:
@@ -23,7 +23,7 @@ async def send_daily_reminder(bot: Bot):
         print(f"Failed to send to {Config.ADMIN_ID}: {e}")
 
 async def send_stats_to_mentor(bot: Bot):
-    import_stats_from_sheet()
+    await import_stats_from_sheet()
     try:
         if not stats_exist_for_date(datetime.now()):
             await bot.send_message(
